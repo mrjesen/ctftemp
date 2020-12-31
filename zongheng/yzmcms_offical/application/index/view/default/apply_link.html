@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	  <title>{$seo_title}</title>
+	  <meta name="author" content="YzmCMS内容管理系统">
+	  <meta name="keywords" content="{$keywords}" />
+	  <meta name="description" content="{$description}" />
+	  <link href="{STATIC_URL}css/yzm-common.css" rel="stylesheet" type="text/css" />
+	  <link href="{STATIC_URL}css/yzm-form.css" rel="stylesheet" type="text/css" />
+	  <script type="text/javascript" src="{STATIC_URL}js/jquery-1.8.2.min.js"></script>
+	  <script type="text/javascript" src="{STATIC_URL}js/yzm-front.js"></script>
+	  <script type="text/javascript" src="{STATIC_URL}plugin/layer/layer.js"></script>
+  </head>
+  <body>
+	     {m:include "index","header"} 
+		 <div class="yzm-content-box yzm-form-box">
+	 		<div class="yzm-title">
+	 			<h2>申请友情链接</h2>
+	 			<span class="yzm-title-right">
+	 				当前位置：<a href="{SITE_URL}">首页</a>&gt; 申请友情链接
+	 			</span>
+	 		</div>
+		  <form action="{U('link/index/post')}" method="post" onsubmit="return checkall()">
+		    <table class='yzm-table'>
+		        <tr>
+		            <td class="yzm-table-title">网站名称<span class="red">*</span></td>
+		            <td>
+		                <input type="text" value="" name="name" class="yzm-input-text">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">网站地址<span class="red">*</span></td>
+		            <td>
+		                <input type="url" value="" name="url" class="yzm-input-text">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">站长姓名<span class="red">*</span></td>
+		            <td>
+		                <input type="text" value="" name="username" class="yzm-input-text">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">站长邮箱<span class="red">*</span></td>
+		            <td>
+		                <input type="email" value="" name="email" class="yzm-input-text">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">Logo地址</td>
+		            <td>
+		                <input type="text" value="" name="logo" class="yzm-input-text">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">网站简介</td>
+		            <td><textarea name="msg" class="yzm-textarea"></textarea></td>
+		        </tr>
+		        <tr>
+		            <td class="yzm-table-title">验证码<span class="red">*</span></td>
+		            <td>
+		            	<input name="code" type="text" class="yzm-input-text" style="width:100px;">
+		            	<img src="{U('api/index/code')}" onclick="this.src=this.src+'?'" class="yzm-code" title="看不清？点击更换">
+		            </td>
+		        </tr>
+		        <tr>
+		            <td></td>
+		            <td><input type="submit" name="dosubmit" value="确认提交" class="yzm-submit"></td>
+		        </tr>
+		    </table>
+			</form> 
+		 </div>
+		 <script type="text/javascript">
+		 	function checkall(){
+		 		if($("input[name='name']").val()==''){
+		 			layer.msg("网站名称不能为空!", {icon:2});
+		 			return false;
+		 		}
+		 		if($("input[name='url']").val()==''){
+		 			layer.msg("网站地址不能为空!", {icon:2});
+		 			return false;
+		 		}
+		 		if($("input[name='username']").val()==''){
+		 			layer.msg("站长姓名不能为空!", {icon:2});
+		 			return false;
+		 		}
+		 		if($("input[name='email']").val()==''){
+		 			layer.msg("站长邮箱不能为空!", {icon:2});
+		 			return false;
+		 		}
+		 		if($("input[name='code']").val()==''){
+		 			layer.msg("验证码不能为空!", {icon:2});
+		 			return false;
+		 		}
+		 		return true;
+		 	}
+		 </script>		  	
+ 		{m:include "index","footer"} 

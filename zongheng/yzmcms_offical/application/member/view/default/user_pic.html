@@ -1,0 +1,37 @@
+{m:include "member","header"}
+<div class="yzm_member_container main">
+    {m:include "member","left"}
+    <script type="text/javascript" src="{STATIC_URL}js/uploadpreview.js"></script>
+    <div class="main_right">
+        <div class="tit">
+            <h3>修改头像</h3>
+        </div>
+        <div class="main_cont">
+            <div class="explain">
+                <p>禁止上传违法、色情、广告头像，情节严重者将会被封号处理。</p>
+                <p>支持 jpg, jpeg, png, gif 格式图片</p>
+            </div>
+            <div class="userimg">
+                <img id="avatar" src="{if $userpic}{$userpic}{else}{STATIC_URL}images/default.gif{/if}" />
+            </div>
+            <form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
+                <input type="file" id="user_pic" class="file" name="user_pic" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+                <input type="submit" name="dosubmit" value="保存" class="submit" />
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function () {
+	     $("#user_pic").uploadPreview({ Img: "avatar", Width: 120, Height: 120 });
+	});
+    function check(){
+		var file = $("#user_pic").val();
+		if(file == ''){
+		  layer.msg('请上传头像！', {icon:2});
+		  return false;
+		}
+    }
+</script>
+{m:include "member","footer"}

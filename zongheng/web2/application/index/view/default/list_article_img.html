@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	  <title>{$seo_title}</title>
+	  <meta name="author" content="YzmCMS内容管理系统">
+	  <meta name="keywords" content="{$keywords}" />
+	  <meta name="description" content="{$description}" />
+	  <link href="{STATIC_URL}css/yzm-common.css" rel="stylesheet" type="text/css" />
+	  <link href="{STATIC_URL}css/yzm-style.css" rel="stylesheet" type="text/css" />
+	  <script type="text/javascript" src="{STATIC_URL}js/jquery-1.8.2.min.js"></script>
+	  <script type="text/javascript" src="{STATIC_URL}js/yzm-front.js"></script>
+  </head>
+  <body>
+	    {m:include "index","header"} 
+		 <div class="yzm-content-box yzm-main-left yzm-news-list">
+		 		<div class="yzm-title">
+		 			<h2>{get_catname($catid)}</h2>
+		 		</div>
+
+		 		{m:lists field="id,title,description,url,flag,color,thumb" catid="$catid" limit="10" page="page"}
+		 		{loop $data $v}
+		 		<div class="yzm-news">
+		 			<a href="{$v[url]}" class="yzm-news-img">
+		 				<img src="{get_thumb($v['thumb'])}" alt="{$v[title]}" title="{$v[title]}" />
+		 			</a>
+		 			<div class="yzm-news-right">
+		 				{if strstr($v['flag'],'1')}<em>顶</em>{/if} <!-- 内容属性 -->
+		 				<a href="{$v[url]}">{title_color($v['title'], $v['color'])}</a>
+		 				<p>{$v[description]}</p>
+		 				<div class="yzm-news-tags">
+		 					{php $aid = $v['id'];}
+ 							{m:get sql="SELECT id,tag FROM yzmcms_tag_content AS a LEFT JOIN yzmcms_tag AS b ON a.tagid=b.id WHERE aid=$aid" limit="5" return="tag_data"}
+ 							{loop $tag_data $val}	
+ 							<a href="{tag_url($val['id'])}" target="_blank" >{$val[tag]}</a>
+ 							{/loop}
+		 				</div>
+		 			</div>
+		 		</div>		
+		 		{/loop}						
+
+				<div id="page">{$pages}</div>
+		  </div>
+		  
+		 <div class="yzm-main-right">	
+		 	<div class="yzm-content-box">
+				<div class="yzm-title">
+		 			<h2>点击排行</h2>
+		 		</div>
+		 	    <ul class="yzm-ranking">
+		 			{m:hits field="title,url,color,inputtime" catid="$catid" limit="10" cache="3600"}
+					{loop $data $k=>$v}
+					{php $k=$k+1;}
+					   <li><em>{$k}</em><span class="date">{date('m-d',$v['inputtime'])}</span><a href="{$v[url]}" title="{$v[title]}" target="_blank">{title_color($v['title'], $v['color'])}</a></li>	
+					{/loop}						
+		 		</ul>		 		
+		 	</div>	
+ 		 	<div class="yzm-line"></div>
+		 	<div class="yzm-content-box">
+				<div class="yzm-title">
+		 			<h2>随机推荐</h2>
+		 		</div>
+		 	    <ul class="yzm-like-list">
+		 			{m:lists field="title,url,color,inputtime" catid="$catid" order="RAND()" limit="10"}
+					{loop $data $v}
+					   <li><span class="date">{date('m-d',$v['inputtime'])}</span><a href="{$v[url]}" title="{$v[title]}" target="_blank">{title_color($v['title'], $v['color'])}</a></li>	
+					{/loop}						
+		 		</ul>		 		
+		 	</div>	
+ 		 	<div class="yzm-line"></div>
+ 		 	<div class="yzm-list-advertise">
+ 		 		<a href="http://www.yzmcms.com" target="_blank">
+ 		 		<p>PC+WAP+微信三站合一</p>
+ 		 		<p class="yzm-ad">YzmCMS开源CMS</p>
+ 		 		</a>
+ 		 	</div>
+ 		 	<div class="yzm-line"></div>
+ 	 	 	<div class="yzm-content-box">
+ 	 			<div class="yzm-title">
+ 	 	 			<h2>最新评论</h2>
+ 	 	 		</div>
+ 			    <ul>
+ 				{m:comment_newest limit="10"}
+ 				<ul class="yzm-comment-list">
+ 				{loop $data $v}	
+ 					<li>
+ 					<a href="{$v[url]}" title="{$v[title]}">{$v[title]}</a>
+ 					<p><em>{if $v['userid']}{$v[username]}{else}网友评论{/if}</em>：{$v[content]}</p>
+ 					</li>
+ 				{/loop} 					
+ 				</ul>		 		
+ 	 	 	</div>	
+		 	<div class="yzm-line"></div>
+	 	 	<div class="yzm-content-box">
+	 			<div class="yzm-title">
+	 	 			<h2>热门标签</h2>
+	 	 		</div>
+			    <ul class="yzm-tag-list">
+				{m:tag field="id,tag,total,remarks" catid="$catid" limit="30"}
+				{loop $data $v}
+				   <li><a href="{tag_url($v['id'])}" target="_blank">{$v[tag]}({$v[total]})</a></li>	
+				{/loop}						
+				</ul>		 		
+	 	 	</div>	
+						 
+		 </div>			  	
+ 		{m:include "index","footer"} 

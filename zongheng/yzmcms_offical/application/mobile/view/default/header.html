@@ -1,0 +1,38 @@
+<header class="yzm-header" name="top">
+	<img src="{STATIC_URL}images/menu.png" class="yzm-menu">
+	<img src="{STATIC_URL}images/search.png" class="yzm-search">
+	<h2>{$seo_title}</h2>	
+	<div class="yzm-search-form">
+		<form method="get" action="{U('search/index/init')}">
+			<input type="hidden" name="is_wap" value="1"/>
+			<input name="q" type="text" placeholder="输入关键字" required class="yzm-input">
+			<input type="submit" class="yzm-submit" value="搜索">
+		</form>
+	</div>	 
+</header>
+<nav class="yzm-nav">
+	<ul>
+		<li><a href="{U('mobile/index/init')}" {if !isset($catid)} class="current" {/if}>网站首页</a></li>
+		{m:nav field="mobname,catid,type,pclink" where="parentid=0" limit="20" return="nav_data"}
+		{loop $nav_data $v}
+		<li>
+			<a {if isset($catid) && $v['catid']==$catid} class="current" {/if} href="{if $v['type']!=2}{U('mobile/index/lists', array('catid'=>$v['catid']))}{else}{$v[pclink]}{/if}">{$v[mobname]}</a>
+		</li>
+		{/loop}
+	</ul>
+</nav>
+<script type="text/javascript">
+	$(function() {
+		$(".yzm-nav").simplerSidebar({
+			opener: '.yzm-menu',
+			sidebar: {
+				align: 'left',
+				width: 250
+			}
+		});
+
+		$(".yzm-search").click(function(){
+			$(".yzm-search-form").slideToggle(100);
+		});
+	});
+</script>	

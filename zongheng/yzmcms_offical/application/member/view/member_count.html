@@ -1,0 +1,39 @@
+<?php include $this->admin_tpl('meta', 'admin');?>
+<title>会员统计 - YzmCMS内容管理系统</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 会员管理 <span class="c-gray en">&gt;</span> 会员统计 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<article class="page-container">
+	<div id="main" style="min-width:700px;height:400px"></div>
+</article>
+<script type="text/javascript" src="<?php echo STATIC_URL;?>plugin/echarts/echarts.common.min.js"></script>
+<script type="text/javascript">
+
+	var res = <?php echo $result;?>;
+	var myChart = echarts.init(document.getElementById('main'));
+
+	var option = {
+		title: {
+			text: '近10日注册会员统计'
+		},
+		color: ['#3398DB'],
+		tooltip: {
+			trigger: 'axis'
+		},
+		xAxis: {
+		    type: 'category',
+		    data: res.day
+	    },
+	    yAxis: {
+		    type: 'value'
+	    },
+	    series: [{
+		    data: res.num,
+		    type: 'line'
+	    }]
+	};
+
+	myChart.setOption(option);
+</script>
+</body>
+</html>

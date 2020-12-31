@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>{$seo_title}</title>
+    <meta name="author" content="YzmCMS内容管理系统">
+    <meta name="keywords" content="{$keywords}" />
+    <meta name="description" content="{$description}" />
+    <link href="{STATIC_URL}css/yzm-mobile-index.css?v=yzmcms" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{STATIC_URL}js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="{STATIC_URL}js/mobile_simpler-sidebar.min.js"></script>
+    <script type="text/javascript" src="{STATIC_URL}js/mobile_scroll.js"></script>
+    <script type="text/javascript" src="{STATIC_URL}js/mobile_scrollload.js"></script>
+</head>
+
+<body>
+    <!--网站容器-->
+    <div class="yzm-container">
+        {m:include "mobile","header"}
+        <div class="clearfix"></div>
+        <!--焦点图-->
+        <div class="yzm-toppic">
+            <div class="yzm-imgslidemain">
+                <div id="imgSlide" class="yzm-imgslide">
+                    <ul>
+                    	<!-- 此处为功能演示，调取模型id为1的且有缩略图的内容 -->
+                        {m:lists field="id,catid,title,thumb" modelid="1" thumb="1" limit="3"}
+                        {loop $data $v}
+                        <li>
+                        	<a href="{mobile_url($v['catid'], $v['id'])}"><img src="{$v[thumb]}" alt="{$v[title]}" title="{$v[title]}"></a>
+                            <p>{$v[title]}</p>
+                        </li>
+                        {/loop}
+                    </ul>
+                </div>
+                <ul class="yzm-navslide">
+                    <li class="i_point active">
+                    <li class="i_point">
+                    <li class="i_point">
+                </ul>
+            </div>
+        </div>
+        <!--主要内容-->
+        <div id="main">
+            <div class="yzm-news-list">
+                <h3 class="yzm-title">【最近更新】</h3>
+                <ul>
+                    <!-- 此处仅为功能演示，不分栏目，调取模型ID(modelid)为1的所有内容 -->
+                    {m:lists field="id,catid,title,color" modelid="1" limit="20"}
+                    {loop $data $v}
+                    <li><a href="{mobile_url($v['catid'], $v['id'])}" title="{$v[title]}">{title_color($v['title'], $v['color'])}</a></li>
+                    {/loop}
+                </ul>
+            </div>
+            <div class="yzm-news-list">
+                <h3 class="yzm-title">【小编推荐】</h3>
+                <ul>
+                    <!-- 此处为功能演示，调取内容属性为“推荐”的内容 -->
+                    {m:lists field="id,catid,title,color" modelid="1" flag="3" limit="10"}
+                    {loop $data $v}
+                    <li><a href="{mobile_url($v['catid'], $v['id'])}" title="{$v[title]}">{title_color($v['title'], $v['color'])}</a></li>
+                    {/loop}
+                </ul>
+            </div>
+            <div class="yzm-news-img">
+                <h3 class="yzm-title">【图文资讯】</h3>
+                <ul>
+                    <!-- 此处仅为功能演示，调用模型ID为1且有缩略图的内容 -->
+                    {m:lists field="id,catid,title,thumb" modelid="1" thumb="1" limit="6"}
+                    {loop $data $k=>$v}
+                    <li>
+                    	<a href="{mobile_url($v['catid'], $v['id'])}"><img src="{$v[thumb]}" alt="{$v[title]}" title="{$v[title]}">
+                            <p>{$v[title]}</p>
+                        </a>
+                    </li>
+                    {/loop}
+                </ul>
+            </div>
+        </div>
+        {m:include "mobile","footer"}
