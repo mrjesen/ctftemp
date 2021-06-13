@@ -1,0 +1,1 @@
+[{"jsonrpc":"2.0","id":1,"method":"call","params":["00000000000000000000000000000000","luci","getFeatures",{}]},{"jsonrpc":"2.0","id":2,"method":"call","params":["00000000000000000000000000000000","file","list",{"path":"/www/luci-static/resources/preload"}]}]
